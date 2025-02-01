@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}About Me{% endblock %}
+
+{% block header %}Education & Certifications{% endblock %}
+
+{% block content %}
+<style>
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+
+    /* Education Section Styles */
+    .education-section {
+        margin-bottom: 4rem;
+    }
+
+    .education-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .education-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .education-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 5px 15px rgba(0, 255, 163, 0.2);
+    }
+
+    .education-icon {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .education-content h3 {
+        color: var(--secondary-color);
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .education-content .institution {
+        color: var(--light-text);
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .education-content .year {
+        color: var(--light-text);
+        opacity: 0.8;
+        margin-bottom: 0.5rem;
+    }
+
+    .education-content .grade {
+        color: var(--secondary-color);
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    /* Updated Certification Section Styles */
+    .certification-section {
+        margin-top: 4rem;
+        padding: 2rem;
+    }
+
+    .certification-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .certification-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        border: 1px solid rgba(0, 255, 163, 0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        min-height: 550px; /* Fixed minimum height */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .certification-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 255, 163, 0.3);
+        border-color: rgba(0, 255, 163, 0.5);
+    }
+
+    .certification-card img {
+        width: 100%;
+        height: 220px; /* Fixed height for images */
+        object-fit: cover;
+        border-bottom: 2px solid rgba(0, 255, 163, 0.2);
+    }
+
+    .certification-details {
+        padding: 2rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .certification-details h3 {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .certification-details h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--secondary-color);
+        transition: width 0.3s ease;
+    }
+
+    .certification-card:hover h3::after {
+        width: 100%;
+    }
+
+    .certification-details p {
+        color: var(--light-text);
+        line-height: 1.6;
+        font-size: 1.05rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+    }
+
+    .cert-date {
+        color: var(--secondary-color);
+        font-style: italic;
+        font-size: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 255, 163, 0.2);
+        font-weight: 500;
+        margin-top: auto;
+    }
+
+    @media (max-width: 1200px) {
+        .certification-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .certification-card {
+            min-height: 500px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .certification-grid {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+
+        .certification-card {
+            min-height: auto;
+        }
+
+        .certification-details {
+            padding: 1.5rem;
+        }
+
+        .certification-details p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+    }
+
+    /* Add animation keyframes */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .certification-card {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+    }
+
+    .certification-card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .certification-card:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    .certification-card:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        text-shadow: 0 0 15px rgba(0, 255, 163, 0.3);
+    }
+
+    /* Add custom scrollbar styling */
+    .certification-details::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .certification-details::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .certification-details::-webkit-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 3px;
+    }
+</style>
+
+<div class="about-container">
+    <!-- Education Section -->
+    <section class="education-section">
+        <h2 class="section-title">Education</h2>
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="education-content">
+                    <h3>B.Sc Data Science</h3>
+                    <p class="institution">Krishna University</p>
+                    <p class="year">2022 - 2025</p>
+                    <p class="grade">CGPA: 9.0</p>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-school"></i>
+                </div>
+                <div class="education-content">
+                    <h3>Intermediate (12th)</h3>
+                    <p class="institution">Kakaraparti Bhavanarayana College</p>
+                    <p class="year">2020 - 2022</p>
+                    <p class="grade">Percentage: 83%</p>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="education-content">
+                    <h3>High School (10th)</h3>
+                    <p class="institution">GNRMC High School</p>
+                    <p class="year">2019 - 2020</p>
+                    <p class="grade">Percentage: 90%</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="certification-section">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certification-grid">
+            <div class="certification-card">
+                <img src="{{ url_for('static', filename='images/image3.png') }}" alt="Deep Learning Certificate">
+                <div class="certification-details">
+                    <h3>Deep Learning</h3>
+                    <p>
+                        Comprehensive training in deep learning fundamentals and advanced concepts. 
+                        Covered neural networks, CNN, RNN, and practical implementation using TensorFlow 
+                        and PyTorch. Completed hands-on projects in computer vision and natural language processing.
+                    </p>
+                    <p class="cert-date">December 2024</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <img src="{{ url_for('static', filename='images/image4.png') }}" alt="UI/UX Design Certificate">
+                <div class="certification-details">
+                    <h3>UI/UX Designer</h3>
+                    <p>
+                        Advanced certification in UI/UX design principles and practices. 
+                        Mastered user research, wireframing, prototyping, and modern design tools. 
+                        Created multiple real-world projects focusing on user-centered design approaches.
+                    </p>
+                    <p class="cert-date">October 2023</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <img src="{{ url_for('static', filename='images/image6.png') }}" alt="Web Design Certificate">
+                <div class="certification-details">
+                    <h3>Introduction to Web Design</h3>
+                    <p>
+                        Comprehensive web design certification covering HTML5, CSS3, and responsive design principles. 
+                        Learned modern design trends, accessibility standards, and best practices for creating 
+                        engaging web experiences.
+                    </p>
+                    <p class="cert-date">September 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

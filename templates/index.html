@@ -1,0 +1,776 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}Welcome{% endblock %}
+
+{% block content %}
+<style>
+    /* Update intro section layout */
+    .intro-section {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+        padding: 3rem;
+        margin-bottom: 4rem;
+    }
+
+    .profile-section {
+        position: sticky;
+        top: 100px;
+        text-align: center;
+    }
+
+    .profile-picture {
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        border: 4px solid var(--secondary-color);
+        box-shadow: 0 0 25px rgba(0, 255, 163, 0.3);
+        object-fit: cover;
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .profile-picture:hover {
+        transform: scale(1.02);
+    }
+
+    .profile-name {
+        font-size: 2.5rem;
+        color: var(--light-text);
+        margin-bottom: 1rem;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(0, 255, 163, 0.3);
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin: 1.5rem 0;
+    }
+
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 255, 163, 0.4);
+        background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+    }
+
+    .social-icon i {
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .resume-button {
+        display: inline-block;
+        background: linear-gradient(45deg, #FF1E56, #7B2CBF);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: none;
+        margin-top: 1rem;
+    }
+
+    .resume-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
+        background: linear-gradient(45deg, #7B2CBF, #FF1E56);
+    }
+
+    .resume-button i {
+        margin-right: 0.5rem;
+    }
+
+    .content-section {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    /* Role Boxes Styles */
+    .role-boxes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .role-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .role-box:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .role-box h3 {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .role-box i {
+        font-size: 2rem;
+    }
+
+    .role-box ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .role-box li {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .role-box li::before {
+        content: '▹';
+        color: var(--secondary-color);
+    }
+
+    /* Education Section Styles */
+    .education-section {
+        margin-top: 4rem;
+    }
+
+    .education-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .education-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .education-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .education-icon {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .education-content h3 {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .education-content p {
+        margin-bottom: 0.5rem;
+    }
+
+    .education-content .grade {
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+
+    /* Certification Section Styles */
+    .certifications-section {
+        margin-top: 4rem;
+    }
+
+    .certification-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .certification-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .certification-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .certification-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .certification-details h3 {
+        color: var(--secondary-color);
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .cert-date {
+        color: var(--secondary-color);
+        margin-top: 1rem;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .education-card {
+            padding: 1.5rem;
+            gap: 1rem;
+        }
+
+        .education-icon {
+            font-size: 2rem;
+            min-width: 40px;
+        }
+
+        .certification-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Skills Section Styles */
+    .skills-section {
+        margin-top: 4rem;
+    }
+
+    .skills-category {
+        margin-bottom: 3rem;
+    }
+
+    .skills-category h3 {
+        color: var(--secondary-color);
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .skills-category h3::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: var(--secondary-color);
+        border-radius: 2px;
+    }
+
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 1rem;
+    }
+
+    .skill-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .skill-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 255, 163, 0.2);
+    }
+
+    .skill-icon {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-card h4 {
+        font-size: 1.2rem;
+        color: var(--light-text);
+        margin: 0;
+    }
+
+    .skill-level {
+        font-size: 0.9rem;
+        color: var(--secondary-color);
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        background: rgba(0, 255, 163, 0.1);
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .skills-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            padding: 1.5rem;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+        }
+    }
+
+    .contact-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .contact-header h2 {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    .contact-header p {
+        color: var(--light-text);
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    .contact-form {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        color: var(--secondary-color);
+        font-size: 1.1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--light-text);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 0 10px rgba(0, 255, 163, 0.2);
+    }
+
+    .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 255, 163, 0.3);
+        background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+    }
+
+    .submit-btn i {
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .submit-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+        .contact-container {
+            padding: 1rem;
+        }
+
+        .contact-form {
+            padding: 2rem;
+        }
+    }
+</style>
+
+<div class="home-sections">
+    <!-- Introduction Section -->
+    <section class="intro-section">
+        <!-- Left Side - Profile -->
+        <div class="profile-section">
+            <img src="{{ url_for('static', filename='images/avanthi.png') }}" alt="Profile Picture"
+                class="profile-picture">
+            <h1 class="profile-name">Avanthi Varupula</h1>
+            <div class="social-links">
+                <a href="https://github.com/account" target="_blank" class="social-icon" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/avanthi-varupula-70578a2a2/" target="_blank" class="social-icon" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            <a href="{{ url_for('download_resume') }}" class="resume-button">
+                <i class="fas fa-download"></i> Download Resume
+            </a>
+        </div>
+
+        <!-- Right Side - Content -->
+        <div class="content-section">
+            <div class="about-me">
+                <h2>About Me</h2>
+                <p>
+                    Hello! I'm Avanthi Varupula, a passionate Full Stack Developer and Data Science enthusiast currently
+                    pursuing
+                    my B.Sc in Data Science at Krishna University. With a strong foundation in both front-end and
+                    back-end development,
+                    I strive to create innovative solutions that make a positive impact.
+                </p>
+
+                <!-- Add Role Boxes -->
+                <div class="role-boxes">
+                    <div class="role-box">
+                        <h3>
+                            <i class="fas fa-code"></i>
+                            Full Stack Developer
+                        </h3>
+                        <ul>
+                            <li>Frontend Development with HTML, CSS, JavaScript</li>
+                            <li>Backend Development with Python, Flask</li>
+                            <li>Database Management with SQL</li>
+                            
+                            <li>Responsive Web Design</li>
+                        </ul>
+                    </div>
+
+                    <div class="role-box">
+                        <h3>
+                            <i class="fas fa-brain"></i>
+                            Data Science
+                        </h3>
+                        <ul>
+                            <li>Data Analysis and Visualization</li>
+                            <li>Machine Learning Algorithms</li>
+                            <li>Statistical Analysis</li>
+                            <li>Python for Data Science</li>
+                            <li>Data Visualization with Tableau & Power BI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this after the role-boxes div and before projects section -->
+    <section class="section education-section">
+        <h2 class="section-title">Education</h2>
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="education-content">
+                    <h3>B.Sc Data Science</h3>
+                    <p class="institution">Krishna University</p>
+                    <p class="year">2022 - 2025</p>
+                    <p class="grade">CGPA: 9.0</p>
+                    <p class="details">Coursework includes Data Structures, Algorithms, Machine Learning, and Web
+                        Development</p>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-school"></i>
+                </div>
+                <div class="education-content">
+                    <h3>Intermediate (12th)</h3>
+                    <p class="institution">Kakaraparti Bhavanarayana College</p>
+                    <p class="year">2020 - 2022</p>
+                    <p class="grade">Percentage: 83%</p>
+                    <p class="details">Focus on Mathematics, Physics, and Chemistry</p>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="education-content">
+                    <h3>High School (10th)</h3>
+                    <p class="institution">GNRMC High School</p>
+                    <p class="year">2019 - 2020</p>
+                    <p class="grade">Percentage: 90%</p>
+                    <p class="details">School topper in Mathematics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this after education section and before certifications -->
+    <section class="section skills-section">
+        <h2 class="section-title">Technical Skills</h2>
+
+        <div class="skills-category">
+            <h3>Frontend Development</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fab fa-html5 skill-icon"></i>
+                    <h4>HTML5</h4>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-css3-alt skill-icon"></i>
+                    <h4>CSS3</h4>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-js skill-icon"></i>
+                    <h4>JavaScript</h4>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3>Backend Development</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fab fa-python skill-icon"></i>
+                    <h4>Python</h4>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-java skill-icon"></i>
+                    <h4>Java</h4>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-server skill-icon"></i>
+                    <h4>Flask</h4>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-python skill-icon"></i>
+                    <h4>Django</h4>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-category">
+            <h3>Database & Analytics</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h4>SQL</h4>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h4>Oracle</h4>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-chart-bar skill-icon"></i>
+                    <h4>Tableau</h4>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-chart-line skill-icon"></i>
+                    <h4>Power BI</h4>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section certifications-section">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certification-grid">
+            <div class="certification-card">
+                <img src="{{ url_for('static', filename='images/image3.png') }}" alt="Deep Learning Certificate">
+                <div class="certification-details">
+                    <h3>Deep Learning</h3>
+                    <p>Deep learning is a type of machine learning that uses artificial neural networks to learn from
+                        data. Artificial neural networks are inspired by the human brain, and they can be used to solve
+                        a wide variety of problems.</p>
+                    <p class="cert-date">December 2024</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <img src="{{ url_for('static', filename='images/image4.png') }}" alt="UI/UX Design Certificate">
+                <div class="certification-details">
+                    <h3>UI/UX Designer</h3>
+                    <p>UI/UX designers contribute to the product development process by understanding user needs,
+                        defining user flows, creating wireframes and prototypes, designing intuitive interfaces.</p>
+                    <p class="cert-date">October 2023</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <img src="{{ url_for('static', filename='images/image6.png') }}" alt="Web Design Certificate">
+                <div class="certification-details">
+                    <h3>Introduction to Web Design</h3>
+                    <p>Web design is the creation of websites and pages to reflect a company's brand and information and
+                        ensure a user-friendly experience. Appearance and design are incorporated as vital elements.</p>
+                    <p class="cert-date">September 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects-section">
+        <h2 class="section-title">My Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <img src="{{ url_for('static', filename='images/image1.png') }}" alt="AI Enigma" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">AI Enigma</h3>
+                    <p class="project-description">
+                        A chatbot that understands context and responds naturally. Features include slang recognition
+                        and contextual responses.
+                    </p>
+                    <a href="https://sravs816.github.io/Avanthi/" class="animated-button" target="_blank">
+                        <i class="fab fa-github"></i> View Project
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="{{ url_for('static', filename='images/image2.png') }}" alt="Image Gallery"
+                    class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Image Gallery</h3>
+                    <p class="project-description">
+                        A responsive image gallery with customizable styles and descriptions.
+                    </p>
+                    <a href="https://vardhan411205.github.io/image_galary/" class="animated-button" target="_blank">
+                        <i class="fab fa-github"></i> View Project
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="{{ url_for('static', filename='images/image5.png') }}" alt="Movie Ticket Booking"
+                    class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Movie Ticket Booking</h3>
+                    <p class="project-description">
+                        Online movie ticket booking system with seat selection, payment processing, and ticket
+                        management.
+                    </p>
+                    <a href="https://vardhan411205.github.io/movie_ticket/" class="animated-button" target="_blank">
+                        <i class="fab fa-github"></i> View Project
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-header">
+                <h2>Contact Me</h2>
+                <p>Feel free to reach out! I'd love to hear from you.</p>
+            </div>
+
+            <div class="contact-form">
+                <form id="contactForm" action="/send_message" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Write your message here..."
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </section>
+</div>
+{% endblock %}

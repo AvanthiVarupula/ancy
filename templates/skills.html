@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}My Skills{% endblock %}
+
+{% block header %}Technical Skills{% endblock %}
+
+{% block content %}
+<section class="section skills-section">
+    <h2 class="section-title"></h2>
+
+    <div class="skills-category">
+        <h3>Frontend Development</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fab fa-html5 skill-icon"></i>
+                <h4>HTML5</h4>
+                <div class="skill-level">Advanced</div>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-css3-alt skill-icon"></i>
+                <h4>CSS3</h4>
+                <div class="skill-level">Advanced</div>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-js skill-icon"></i>
+                <h4>JavaScript</h4>
+                <div class="skill-level">Intermediate</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="skills-category">
+        <h3>Backend Development</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fab fa-python skill-icon"></i>
+                <h4>Python</h4>
+                <div class="skill-level">Advanced</div>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-java skill-icon"></i>
+                <h4>Java</h4>
+                <div class="skill-level">Intermediate</div>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-server skill-icon"></i>
+                <h4>Flask</h4>
+                <div class="skill-level">Advanced</div>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-python skill-icon"></i>
+                <h4>Django</h4>
+                <div class="skill-level">Intermediate</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="skills-category">
+        <h3>Database & Analytics</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fas fa-database skill-icon"></i>
+                <h4>SQL</h4>
+                <div class="skill-level">Advanced</div>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-database skill-icon"></i>
+                <h4>Oracle</h4>
+                <div class="skill-level">Intermediate</div>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-chart-bar skill-icon"></i>
+                <h4>Tableau</h4>
+                <div class="skill-level">Intermediate</div>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-chart-line skill-icon"></i>
+                <h4>Power BI</h4>
+                <div class="skill-level">Intermediate</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .django-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}

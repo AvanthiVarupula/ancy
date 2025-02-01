@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}My Projects{% endblock %}
+
+{% block header %}My Projects{% endblock %}
+
+{% block content %}
+<div class="projects-grid">
+    <div class="project-card">
+        <img src="{{ url_for('static', filename='images/image1.png') }}" alt="AI Enigma" class="project-image">
+        <div class="project-content">
+            <h3 class="project-title">AI Enigma</h3>
+            <p class="project-description">
+                A chatbot that understands context and responds naturally. Features include slang recognition 
+                and contextual responses.
+            </p>
+            <a href="https://sravs816.github.io/Avanthi/" class="animated-button" target="_blank">
+                <i class="fab fa-github"></i> View Project
+            </a>
+        </div>
+    </div>
+
+    <div class="project-card">
+        <img src="{{ url_for('static', filename='images/image2.png') }}" alt="Image Gallery" class="project-image">
+        <div class="project-content">
+            <h3 class="project-title">Image Gallery</h3>
+            <p class="project-description">
+                A responsive image gallery with customizable styles and descriptions.
+            </p>
+            <a href="https://vardhan411205.github.io/image_galary/" class="animated-button" target="_blank">
+                <i class="fab fa-github"></i> View Project
+            </a>
+        </div>
+    </div>
+
+    <div class="project-card">
+        <img src="{{ url_for('static', filename='images/image5.png') }}" alt="Movie Ticket Booking" class="project-image">
+        <div class="project-content">
+            <h3 class="project-title">Movie Ticket Booking</h3>
+            <p class="project-description">
+                Online movie ticket booking system with seat selection, payment processing, and ticket management.
+            </p>
+            <a href="https://vardhan411205.github.io/movie_ticket/" class="animated-button" target="_blank">
+                <i class="fab fa-github"></i> View Project
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
