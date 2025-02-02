@@ -10,7 +10,7 @@ app = Flask(__name__)
 # Email Configuration
 SENDER_EMAIL = "varupulaavanthi@gmail.com"  # Your email
 SENDER_PASSWORD = "cfrb qtar nyfu vtkw"      # Your app password
-RECEIVER_EMAIL = "varupulaavanthi@gmail.com"  # Where you want to receive messages
+RECEIVER_EMAIL = "varupulaavanthi@gmail.com"  # Where you want to receive msgs
 
 @app.route('/')
 @app.route('/home')
